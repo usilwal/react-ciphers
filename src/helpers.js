@@ -1,8 +1,4 @@
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const yourMessage = document.getElementById('yourMessage');
-const key = document.getElementById('key');
-const lettersNum = document.getElementById('lettersNum');
-const numbersNum = document.getElementById('numbersNum');
 
 function randomize_key_helper(keyLength, asciiRange) {
     let newKey = ''

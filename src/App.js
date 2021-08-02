@@ -26,17 +26,19 @@ function App() {
     setMessage(e.target.value);
   }
 
+  function handleModifiedMessageChange(e) {
+    setModifiedMessage(e.target.value);
+  }
+
   function handleKeyChange(e) {
     setKey(e.target.value);
   }
   
   function handleEncrypt(e) {
-    e.preventDefault();
     setModifiedMessage(run_cipher('e', get_cipher_type(), message, key))
   }
 
   function handleDecrypt(e) {
-    e.preventDefault();
     setModifiedMessage(run_cipher('d', get_cipher_type(), message, key))
   }
 
@@ -66,7 +68,7 @@ function App() {
         <button id="randomize" onClick={handleRandomize}>Randomize Values</button>
         <button id="decrypt" onClick={handleDecrypt}>Decrypt</button><br />
       </div>
-      Modified Message: <input type="text" id="modifiedMessage" size={80} defaultValue={modifiedMessage} />
+      Modified Message: <input type="text" id="modifiedMessage" size={80} value={modifiedMessage} onChange={handleModifiedMessageChange}/>
     </div>
   );
 }
