@@ -30,6 +30,9 @@ function value_randomizer(type, message) {
             randomKey = Math.floor(Math.random() * 25);
             break;
         case 'vigenere':
+            if (message.length === 0) {
+                return 'Must add message first to generate Vigenere key'
+            }
             keyLength = message.length;
             asciiRange = [65, 90]
             randomKey = randomize_key_helper(keyLength, asciiRange, 'v')
