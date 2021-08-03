@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaLock, FaLockOpen } from "react-icons/fa";
-import './App.css';
 import './helpers';
 import { run_cipher, value_randomizer, keyGuide } from './helpers';
 
