@@ -48,10 +48,10 @@ function App() {
   }
 
   return (
-    <div class="min-h-screen flex m-auto bg-background bg-cover">
-      <div className="m-auto align-middle flex flex-col bg-gray-300 w-6/12">
+    <div class="min-h-screen flex justify-center bg-background bg-cover">
+      <div className="m-auto flex flex-col bg-gray-300 sm:w-10/12 2xl:w-6/12">
         <form className="">
-          <p class="bg-gray-800 font-bold text-white py-8 text-center text-3xl">ENCRYPTION METHOD: <span className="text-blue-300">{cipher.toUpperCase()}</span></p>
+          <p class="bg-gray-800 font-bold text-white py-8 px-8 text-center text-3xl">ENCRYPTION METHOD: <span className="text-blue-300">{cipher.toUpperCase()}</span></p>
           <div id="cipherType" class="bg-wire flex justify-center items-center">
             <input type="radio" id="caesar" name="cipher" value="caesar" className="hidden" onClick={handleCipherClick}/>
             <label htmlFor="caesar" className="bg-black hover:bg-gray-800 text-white px-4 py-2">Caesar</label>
