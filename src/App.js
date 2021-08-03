@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import './App.css';
 import './helpers';
-import { run_cipher, value_randomizer } from './helpers';
+import { run_cipher, value_randomizer, keyGuide } from './helpers';
 
 function App() {
   const [cipher, setCipher] = useState('NONE')
@@ -35,15 +35,15 @@ function App() {
     setKey(e.target.value);
   }
   
-  function handleEncrypt(e) {
+  function handleEncrypt() {
     setModifiedMessage(run_cipher('e', get_cipher_type(), message, key))
   }
 
-  function handleDecrypt(e) {
+  function handleDecrypt() {
     setModifiedMessage(run_cipher('d', get_cipher_type(), message, key))
   }
 
-  function handleRandomize(e) {
+  function handleRandomize() {
     setKey(value_randomizer(cipher, message));
   }
 
@@ -58,22 +58,23 @@ function App() {
             <input type="radio" id="monoalphabetic" name="cipher" value="monoalphabetic" className="hidden" onClick={handleCipherClick}/>
             <label htmlFor="monoalphabetic" className="bg-black hover:bg-gray-800 text-white px-4 py-2 ">Monoalphabetic</label>
             <input type="radio" id="vigenere" name="cipher" value="vigenere" className="hidden" onClick={handleCipherClick}/>
-            <label htmlFor="vigenere" className="bg-black hover:bg-gray-800 text-white px-4 py-2 ">Vigenere</label>
+            <label htmlFor="vigenere" className="bg-black hover:bg-gray-800 text-white px-4 py-2">Vigenere</label>
 
           </div>
           <div id="cipherInputs">
             <p class="flex justify-center py-2 mt-4">Your Message</p>
             <textarea id="yourMessage" rows={4} value={message} className="block m-auto p-2 w-10/12 text-center" onChange={handleMessageChange}/>
-            <p class="flex justify-center py-2">Key</p>
+            <p class="flex justify-center py-2 mt-4">Key</p>
+            <p class="flex justify-center">{keyGuide(cipher)}</p>
             <input type="text" id="key" value={key} className="block m-auto w-10/12 text-center" onChange={handleKeyChange}/>
           </div>
         </form>
-        <div id="cipherButtons" class="flex flex justify-center items-center my-4">
+        <div id="cipherButtons" class="flex justify-center items-center mt-4">
           <button id="encrypt" onClick={handleEncrypt} class="flex bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded mx-1"><FaLock class="my-1 mr-1"/>Encrypt</button>
           <button id="randomize" onClick={handleRandomize} class="flex text-white py-2 px-4 rounded mx-1 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500">Randomize</button>
           <button id="decrypt" onClick={handleDecrypt} class="flex bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mx-1"><FaLockOpen class="my-1 mr-1"/>Decrypt</button><br />
         </div>
-        <p class="bg-wire text-white flex justify-center py-2">Result</p>
+        <p class="bg-wire text-white flex justify-center py-2 mt-4">Result</p>
         <textarea id="modifiedMessage" rows={4} value={modifiedMessage} className="block p-2 text-center" onChange={handleModifiedMessageChange}/>
       </div>
     </div>

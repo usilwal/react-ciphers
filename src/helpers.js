@@ -45,8 +45,34 @@ function value_randomizer(type, message) {
     return randomKey
 }
 
+function keyGuide(cipher) {
+    let text = '';
+
+    switch(cipher) {
+        case 'caesar':
+            text = '[INPUT: Integer from 1 to 25]'
+            break;
+        case 'vigenere':
+            text = '[INPUT: Any number of uppercase letters]'
+            break;
+        case 'monoalphabetic':
+            text = '[INPUT: Any 26 distinct characters]'
+            break;
+        default:
+            break;
+    }
+    return text
+}
+
 function run_cipher(mode, cipher, message, key) {
     let modifiedMessage = '';
+
+    if(message.length === 0) {
+        return 'Please enter a message!'
+    }
+    else if(key.length === 0) {
+        return 'Please enter a key!'
+    }
 
     switch(cipher) {
         case 'caesar':
@@ -54,6 +80,9 @@ function run_cipher(mode, cipher, message, key) {
             modifiedMessage = caesar(message, key) : modifiedMessage = caesar_decrypt(message, key);
             break;
         case 'vigenere':
+            /*if (???) {
+                return 'Key must be all uppercase letters'
+            }*/
             (mode === 'e') ?
             modifiedMessage = vigenere_encrypt(message.toUpperCase(), key.toUpperCase()) : modifiedMessage = vigenere_decrypt(message.toUpperCase(), key.toUpperCase());
             break;
@@ -69,7 +98,6 @@ function run_cipher(mode, cipher, message, key) {
 }
 
 function caesar(message, key) {
-    console.log(message)
     let newMsg = '';
     let newAscii;
     for(let i = 0; i < message.length; i++) {
@@ -112,7 +140,6 @@ function vigenere_decrypt(message, key) {
 
 function monoalphabetic(message, key, mode) {
     let newMessage = '';
-    console.log(new Set(key).size)
     if (key.length !== 26) {
         return "Key must be 26 characters long";
     }
@@ -126,7 +153,6 @@ function monoalphabetic(message, key, mode) {
             newMessage += key[(message[i].charCodeAt() - 65) % 26]
         }
         else if (mode === 'd' && message[i] !== ' ' && message[i] !== '\n') {
-            console.log(key.indexOf(message[i]))
             newMessage += alphabet[key.indexOf(message[i])]
         }
         else {
@@ -139,4 +165,5 @@ function monoalphabetic(message, key, mode) {
 module.exports = {
     value_randomizer,
     run_cipher,
+    keyGuide
 }
