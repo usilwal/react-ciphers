@@ -59,6 +59,7 @@ function keyGuide(cipher) {
             text = '[INPUT: Any 26 distinct characters]'
             break;
         default:
+            text = '[INPUT: None; select cipher]'
             break;
     }
     return text
