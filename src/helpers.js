@@ -149,13 +149,13 @@ function monoalphabetic(message, key, mode) {
 
     for (let i = 0; i < message.length; i++) {
         //create  messages
-        if (mode === 'e' && message[i] !== ' ' && message[i] !== '\n') {
+        if (mode === 'e' && message[i].match(/^[A-Z]+$/)) {
             newMessage += key[(message[i].charCodeAt() - 65) % 26]
         }
         else if (mode === 'd' && message[i] !== ' ' && message[i] !== '\n') {
             newMessage += alphabet[key.indexOf(message[i])]
         }
-        else {
+        else if(message[i] === ' ' || message[i] === '\n') {
             newMessage += message[i]
         }
     }
