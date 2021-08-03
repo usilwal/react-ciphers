@@ -62,9 +62,9 @@ function App() {
 
           </div>
           <div id="cipherInputs">
-            <p class="flex justify-center py-2 mt-4">Your Message</p>
+            <p class="flex justify-center py-2 mt-4 font-bold">Your Message</p>
             <textarea id="yourMessage" rows={4} value={message} className="block m-auto p-2 w-10/12 text-center" onChange={handleMessageChange}/>
-            <p class="flex justify-center py-2 mt-4">Key</p>
+            <p class="flex justify-center py-2 mt-4 font-bold">Key</p>
             <p class="flex justify-center">{keyGuide(cipher)}</p>
             <input type="text" id="key" value={key} className="block m-auto w-10/12 text-center" onChange={handleKeyChange}/>
           </div>
