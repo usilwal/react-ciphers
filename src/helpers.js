@@ -1,11 +1,21 @@
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-function randomize_key_helper(keyLength, asciiRange) {
+function randomize_key_helper(keyLength, asciiRange, type) {
     let newKey = ''
-    const chars = new Set();
-    while(chars.size < keyLength) {
-        chars.add(String.fromCharCode(asciiRange[0] + Math.floor(Math.random() * (asciiRange[1] - asciiRange[0]))))
+    let chars;
+    if(type === 'm') {
+        chars = new Set();
+        while(chars.size < keyLength) {
+            chars.add(String.fromCharCode(asciiRange[0] + Math.floor(Math.random() * (asciiRange[1] - asciiRange[0]))))
+        }
     }
+    else if(type === 'v') {
+        chars = [];
+        while(chars.length < Math.min(keyLength, 50)) {
+            chars.push(String.fromCharCode(asciiRange[0] + Math.floor(Math.random() * (asciiRange[1] - asciiRange[0]))))
+        }
+    }
+
     chars.forEach((char) => newKey += char)
 
     return newKey
@@ -22,17 +32,16 @@ function value_randomizer(type, message) {
         case 'vigenere':
             keyLength = message.length;
             asciiRange = [65, 90]
-            randomKey = randomize_key_helper(keyLength, asciiRange)
+            randomKey = randomize_key_helper(keyLength, asciiRange, 'v')
             break;
         case 'monoalphabetic':
             keyLength = 26;
             asciiRange = [33, 126]
-            randomKey = randomize_key_helper(keyLength, asciiRange)
+            randomKey = randomize_key_helper(keyLength, asciiRange, 'm')
             break;
         default:
             break;
     }
-
     return randomKey
 }
 
@@ -50,7 +59,7 @@ function run_cipher(mode, cipher, message, key) {
             break;
         case 'monoalphabetic':
             (mode === 'e') ?
-            modifiedMessage = monoalphabetic(message.toUpperCase(), key.toUpperCase(), 'e') : modifiedMessage = monoalphabetic(message.toUpperCase(), key.toUpperCase(), 'd');
+            modifiedMessage = monoalphabetic(message.toUpperCase(), key, 'e') : modifiedMessage = monoalphabetic(message, key, 'd');
             break;
         default:
             break;
@@ -103,7 +112,7 @@ function vigenere_decrypt(message, key) {
 
 function monoalphabetic(message, key, mode) {
     let newMessage = '';
-
+    console.log(new Set(key).size)
     if (key.length !== 26) {
         return "Key must be 26 characters long";
     }
@@ -113,8 +122,12 @@ function monoalphabetic(message, key, mode) {
 
     for (let i = 0; i < message.length; i++) {
         //create  messages
-        if (message[i] !== ' ') {
-            (mode === 'e') ? newMessage += key[(message[i].charCodeAt() - 65) % 26] : newMessage += alphabet[key.indexOf(message[i])]
+        if (mode === 'e' && message[i] !== ' ' && message[i] !== '\n') {
+            newMessage += key[(message[i].charCodeAt() - 65) % 26]
+        }
+        else if (mode === 'd' && message[i] !== ' ' && message[i] !== '\n') {
+            console.log(key.indexOf(message[i]))
+            newMessage += alphabet[key.indexOf(message[i])]
         }
         else {
             newMessage += message[i]

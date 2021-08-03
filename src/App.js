@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { FaLock, FaLockOpen } from "react-icons/fa";
 import './App.css';
 import './helpers';
 import { run_cipher, value_randomizer } from './helpers';
 
 function App() {
-  const [cipher, setCipher] = useState('')
+  const [cipher, setCipher] = useState('NONE')
   const [message, setMessage] = useState('')
   const [key, setKey] = useState('')
   const [modifiedMessage, setModifiedMessage] = useState('')
@@ -47,28 +48,34 @@ function App() {
   }
 
   return (
-    <div>
-      <form>
-        <p>Choose encryption method:</p>
-        <div id="cipherType">
-          <input type="radio" id="caesar" name="cipher" value="caesar" onClick={handleCipherClick}/>
-          <label htmlFor="caesar">Caesar</label>
-          <input type="radio" id="vigenere" name="cipher" value="vigenere" onClick={handleCipherClick}/>
-          <label htmlFor="vignere">Vigenere</label>
-          <input type="radio" id="monoalphabetic" name="cipher" value="monoalphabetic" onClick={handleCipherClick}/>
-          <label htmlFor="monoalphabetic">Monoalphabetic</label>
+    <div class="min-h-screen flex m-auto bg-background bg-cover">
+      <div className="m-auto align-middle flex flex-col bg-gray-300 w-6/12">
+        <form className="">
+          <p class="bg-gray-800 font-bold text-white py-8 text-center text-3xl">ENCRYPTION METHOD: <span className="text-blue-300">{cipher.toUpperCase()}</span></p>
+          <div id="cipherType" class="bg-wire flex justify-center items-center">
+            <input type="radio" id="caesar" name="cipher" value="caesar" className="hidden" onClick={handleCipherClick}/>
+            <label htmlFor="caesar" className="bg-black hover:bg-gray-800 text-white px-4 py-2">Caesar</label>
+            <input type="radio" id="monoalphabetic" name="cipher" value="monoalphabetic" className="hidden" onClick={handleCipherClick}/>
+            <label htmlFor="monoalphabetic" className="bg-black hover:bg-gray-800 text-white px-4 py-2 ">Monoalphabetic</label>
+            <input type="radio" id="vigenere" name="cipher" value="vigenere" className="hidden" onClick={handleCipherClick}/>
+            <label htmlFor="vigenere" className="bg-black hover:bg-gray-800 text-white px-4 py-2 ">Vigenere</label>
+
+          </div>
+          <div id="cipherInputs">
+            <p class="flex justify-center py-2 mt-4">Your Message</p>
+            <textarea id="yourMessage" rows={4} value={message} className="block m-auto p-2 w-10/12 text-center" onChange={handleMessageChange}/>
+            <p class="flex justify-center py-2">Key</p>
+            <input type="text" id="key" value={key} className="block m-auto w-10/12 text-center" onChange={handleKeyChange}/>
+          </div>
+        </form>
+        <div id="cipherButtons" class="flex flex justify-center items-center my-4">
+          <button id="encrypt" onClick={handleEncrypt} class="flex bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded mx-1"><FaLock class="my-1 mr-1"/>Encrypt</button>
+          <button id="randomize" onClick={handleRandomize} class="flex text-white py-2 px-4 rounded mx-1 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500">Randomize</button>
+          <button id="decrypt" onClick={handleDecrypt} class="flex bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mx-1"><FaLockOpen class="my-1 mr-1"/>Decrypt</button><br />
         </div>
-        <div id="cipherInputs">
-          Your Message: <input type="text" id="yourMessage" size={80} value={message} onChange={handleMessageChange}/><br />
-          Key: <input type="text" id="key" size={80} value={key} onChange={handleKeyChange}/><br />
-        </div>
-      </form>
-      <div id="cipherButtons">
-        <button id="encrypt" onClick={handleEncrypt}>Encrypt</button>
-        <button id="randomize" onClick={handleRandomize}>Randomize Values</button>
-        <button id="decrypt" onClick={handleDecrypt}>Decrypt</button><br />
+        <p class="bg-wire text-white flex justify-center py-2">Result</p>
+        <textarea id="modifiedMessage" rows={4} value={modifiedMessage} className="block p-2 text-center" onChange={handleModifiedMessageChange}/>
       </div>
-      Modified Message: <input type="text" id="modifiedMessage" size={80} value={modifiedMessage} onChange={handleModifiedMessageChange}/>
     </div>
   );
 }
