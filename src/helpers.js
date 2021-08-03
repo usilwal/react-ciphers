@@ -28,6 +28,7 @@ function value_randomizer(type, message) {
     switch(type) {
         case 'caesar':
             randomKey = Math.floor(Math.random() * 25);
+            if (randomKey === 0) randomKey += 1;
             break;
         case 'vigenere':
             if (message.length === 0) {
